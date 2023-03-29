@@ -19,7 +19,6 @@ public:
     QString getAgeLimit()const;
     void setAgeLimit(QString ageLimit);
 
-    void show()const override;
     QString getGenre()const override;
 };
 
