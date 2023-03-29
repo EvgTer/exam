@@ -5,6 +5,7 @@
 
 class Game
 {
+protected:
     QString name;
     float price;
     QString publisher;
@@ -25,9 +26,9 @@ public:
     void setPublisher(QString publisher);
 
     virtual QString getGenre()const = 0;
-    virtual QString show()const = 0;
+    virtual void show()const = 0;
 
-    const operator <(const Game)const;
+    const operator <(const Game& obj)const;
 
 };
 

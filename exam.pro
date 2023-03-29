@@ -10,11 +10,13 @@ CONFIG += c++17
 
 SOURCES += \
     game.cpp \
+    horror.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     game.h \
+    horror.h \
     mainwindow.h
 
 FORMS += \
