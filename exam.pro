@@ -17,7 +17,8 @@ SOURCES += \
     mainwindow.cpp \
     mmorpg.cpp \
     sandbox.cpp \
-    shooter.cpp
+    shooter.cpp \
+    user.cpp
 
 HEADERS += \
     account.h \
@@ -27,7 +28,8 @@ HEADERS += \
     mainwindow.h \
     mmorpg.h \
     sandbox.h \
-    shooter.h
+    shooter.h \
+    user.h
 
 FORMS += \
     mainwindow.ui
