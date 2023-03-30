@@ -14,14 +14,16 @@ SOURCES += \
     horror.cpp \
     main.cpp \
     mainwindow.cpp \
-    mmorpg.cpp
+    mmorpg.cpp \
+    shooter.cpp
 
 HEADERS += \
     adventure.h \
     game.h \
     horror.h \
     mainwindow.h \
-    mmorpg.h
+    mmorpg.h \
+    shooter.h
 
 FORMS += \
     mainwindow.ui
