@@ -16,6 +16,7 @@ public:
         QString password
         );
     void addGame(Game* obj);
+    void sortLibrary();
 };
 
 #endif // USER_H
