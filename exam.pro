@@ -15,6 +15,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mmorpg.cpp \
+    sandbox.cpp \
     shooter.cpp
 
 HEADERS += \
@@ -23,6 +24,7 @@ HEADERS += \
     horror.h \
     mainwindow.h \
     mmorpg.h \
+    sandbox.h \
     shooter.h
 
 FORMS += \
