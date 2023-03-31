@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->label_logo->setStyleSheet("image: url(:/logo/GGStore_LOGO.jpg);");
 }
 
 MainWindow::~MainWindow()
