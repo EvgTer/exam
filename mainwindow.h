@@ -34,16 +34,23 @@ public:
     void create_accounts();
     void create_store();
 
+    void showTable_Store();
+    void showTable_Library();
+
 private slots:
 
     void on_pushButton_log_clicked();
 
     void on_pushButton_sign_clicked();
 
+    void on_actionAdventure_triggered();
+
 private:
     Ui::MainWindow *ui;
     QSqlDatabase db; // DateBase GGStore
     QSqlQuery* myQuery; // for select
+    QSqlQuery* myQuery1; // for select showTable_Library;
+    QSqlQuery* myQuery2; // for select showTable_Library;
 
     QVector<Account*> accounts;
     QVector<Game*> store;

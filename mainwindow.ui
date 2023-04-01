@@ -14,8 +14,8 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(61, 61, 61);
-color: rgb(255, 255, 255);
+   <string notr="true">background-color: white;
+color: black;
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -32,16 +32,12 @@ color: rgb(255, 255, 255);
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Home&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(255, 255, 255);
-border-top-color: rgb(61, 61, 61);
-background-color: rgb(61, 61, 61);
-border-color: rgb(61, 61, 61);
-selection-background-color: rgb(61, 61, 61);
-background-color: rgb(61, 61, 61);
-selection-background-color: rgb(61, 61, 61);</string>
+     <string notr="true">color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+</string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -150,12 +146,12 @@ selection-background-color: rgb(61, 61, 61);</string>
        <string>Sign up</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>360</x>
         <y>380</y>
-        <width>59</width>
+        <width>63</width>
         <height>91</height>
        </rect>
       </property>
@@ -273,8 +269,9 @@ selection-background-color: rgb(61, 61, 61);</string>
        <item>
         <widget class="QTableWidget" name="tableWidget_store">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(61, 61, 61);
-color: rgb(61, 61, 61);</string>
+          <string notr="true">background-color: rgb(255,255,255);
+color: rgb(0,0,0);
+</string>
          </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>218</number>
@@ -286,20 +283,63 @@ color: rgb(61, 61, 61);</string>
           <property name="text">
            <string>Name</string>
           </property>
+          <property name="background">
+           <color>
+            <red>61</red>
+            <green>61</green>
+            <blue>61</blue>
+           </color>
+          </property>
+          <property name="foreground">
+           <brush brushstyle="NoBrush">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </property>
          </column>
          <column>
           <property name="text">
            <string>Price</string>
+          </property>
+          <property name="foreground">
+           <brush brushstyle="NoBrush">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
           </property>
          </column>
          <column>
           <property name="text">
            <string>Genre</string>
           </property>
+          <property name="foreground">
+           <brush brushstyle="NoBrush">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </property>
          </column>
          <column>
           <property name="text">
            <string>Publisher</string>
+          </property>
+          <property name="foreground">
+           <brush brushstyle="NoBrush">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
           </property>
          </column>
         </widget>

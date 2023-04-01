@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     account.cpp \
+    addadventure.cpp \
     admin.cpp \
     adventure.cpp \
     game.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 
 HEADERS += \
     account.h \
+    addadventure.h \
     admin.h \
     adventure.h \
     game.h \
@@ -34,6 +36,7 @@ HEADERS += \
     user.h
 
 FORMS += \
+    addadventure.ui \
     mainwindow.ui
 
 # Default rules for deployment.
