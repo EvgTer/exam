@@ -50,7 +50,7 @@ void Game::setPublisher(QString publisher)
     this->publisher = publisher;
 }
 
-const Game::operator <(const Game& obj) const
+/*bool Game::operator <(const Game& obj) const
 {
     if (this->name < obj.name)
         return true;
@@ -58,4 +58,4 @@ const Game::operator <(const Game& obj) const
         return true;
     else
         return false;
-}
+}*/

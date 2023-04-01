@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1016</width>
-    <height>648</height>
+    <width>1027</width>
+    <height>652</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,6 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(61, 61, 61);
+color: rgb(255, 255, 255);
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -32,10 +33,12 @@
     </property>
     <property name="styleSheet">
      <string notr="true">color: rgb(255, 255, 255);
+border-top-color: rgb(61, 61, 61);
 background-color: rgb(61, 61, 61);
 border-color: rgb(61, 61, 61);
 selection-background-color: rgb(61, 61, 61);
-background-color: rgb(61, 61, 61);</string>
+background-color: rgb(61, 61, 61);
+selection-background-color: rgb(61, 61, 61);</string>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -60,41 +63,6 @@ background-color: rgb(61, 61, 61);</string>
        <string>Good Games Store</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>440</y>
-        <width>151</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QRadioButton" name="radioButton_4">
-         <property name="text">
-          <string>Log in</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_3">
-         <property name="text">
-          <string>Sign up</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-         <property name="autoRepeat">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="QLabel" name="label_logo">
       <property name="geometry">
        <rect>
@@ -108,39 +76,7 @@ background-color: rgb(61, 61, 61);</string>
        <string/>
       </property>
      </widget>
-     <widget class="QWidget" name="">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>390</y>
-        <width>151</width>
-        <height>24</height>
-       </rect>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QRadioButton" name="radioButton_7">
-         <property name="text">
-          <string>User</string>
-         </property>
-         <property name="autoExclusive">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="radioButton_6">
-         <property name="text">
-          <string>Admin</string>
-         </property>
-         <property name="autoExclusive">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -162,7 +98,7 @@ background-color: rgb(61, 61, 61);</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -183,6 +119,64 @@ background-color: rgb(61, 61, 61);</string>
         <widget class="QLineEdit" name="lineEdit_password">
          <property name="inputMethodHints">
           <set>Qt::ImhHiddenText|Qt::ImhSensitiveData</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="pushButton_log">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>490</y>
+        <width>131</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Log in</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_sign">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>490</y>
+        <width>131</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sign up</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>380</y>
+        <width>59</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QRadioButton" name="radioButton_user">
+         <property name="text">
+          <string>User</string>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="radioButton_admin">
+         <property name="text">
+          <string>Admin</string>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -214,7 +208,40 @@ background-color: rgb(61, 61, 61);</string>
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="tableWidget_library"/>
+        <widget class="QTableWidget" name="tableWidget_library">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(61, 61, 61);</string>
+         </property>
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>218</number>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Price</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Genre</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Publisher</string>
+          </property>
+         </column>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -239,12 +266,43 @@ background-color: rgb(61, 61, 61);</string>
           <string notr="true">font-size: 24pt;</string>
          </property>
          <property name="text">
-          <string>Availiable games:</string>
+          <string>Games:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QTableWidget" name="tableWidget_store"/>
+        <widget class="QTableWidget" name="tableWidget_store">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(61, 61, 61);
+color: rgb(61, 61, 61);</string>
+         </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>218</number>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Price</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Genre</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Publisher</string>
+          </property>
+         </column>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -256,7 +314,7 @@ background-color: rgb(61, 61, 61);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1016</width>
+     <width>1027</width>
      <height>21</height>
     </rect>
    </property>
@@ -274,9 +332,18 @@ background-color: rgb(61, 61, 61);</string>
     <property name="title">
      <string>Delete game</string>
     </property>
+    <addaction name="actionBrowse"/>
+   </widget>
+   <widget class="QMenu" name="menuBalance">
+    <property name="title">
+     <string>Balance</string>
+    </property>
+    <addaction name="actionShow_info"/>
+    <addaction name="actionAdd"/>
    </widget>
    <addaction name="menuAdd_game"/>
    <addaction name="menuDelete"/>
+   <addaction name="menuBalance"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionAdventure">
@@ -302,6 +369,21 @@ background-color: rgb(61, 61, 61);</string>
   <action name="actionShooter">
    <property name="text">
     <string>Shooter</string>
+   </property>
+  </action>
+  <action name="actionBrowse">
+   <property name="text">
+    <string>Browse</string>
+   </property>
+  </action>
+  <action name="actionShow_info">
+   <property name="text">
+    <string>Show info</string>
+   </property>
+  </action>
+  <action name="actionAdd">
+   <property name="text">
+    <string>Add</string>
    </property>
   </action>
  </widget>

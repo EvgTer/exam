@@ -20,6 +20,11 @@ void User::addBalance(float money)
     this->balance += money;
 }
 
+QVector<Game *> User::getLibrary()
+{
+    return library;
+}
+
 User::User(QString login, QString password, float balance)
     :Account(login,password)
 {
@@ -44,5 +49,10 @@ void User::sortLibrary()
                } else {
                    return a->getPrice() < b->getPrice();
                }
-           });
+    });
+}
+
+QString User::getType() const
+{
+    return "User";
 }

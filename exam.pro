@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     account.cpp \
+    admin.cpp \
     adventure.cpp \
     game.cpp \
     horror.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 
 HEADERS += \
     account.h \
+    admin.h \
     adventure.h \
     game.h \
     horror.h \

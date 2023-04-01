@@ -21,8 +21,14 @@ public:
     float getBalance()const;
     void addBalance(float money);
 
+    void createLibrary();
+
+    QVector<Game*> getLibrary();
+
     void addGame(Game* obj);
     void sortLibrary();
+
+    QString getType()const override;
 };
 
 #endif // USER_H

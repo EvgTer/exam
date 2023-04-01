@@ -27,7 +27,7 @@ public:
 
     virtual QString getGenre()const = 0;
 
-    const operator <(const Game& obj)const;
+    //bool operator <(const Game& obj)const;
 
 };
 
