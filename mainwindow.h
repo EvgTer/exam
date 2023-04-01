@@ -32,6 +32,7 @@ public:
     ~MainWindow();
 
     void create_accounts();
+    void create_store();
 
 private slots:
 
