@@ -19,6 +19,7 @@
 #include "sandbox.h"
 #include "shooter.h"
 
+#include "dialog_addadv.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -37,6 +38,8 @@ public:
     void showTable_Store();
     void showTable_Library();
 
+    void gamesToUsersLibrary(User* user);
+
 private slots:
 
     void on_pushButton_log_clicked();
@@ -45,15 +48,18 @@ private slots:
 
     void on_actionAdventure_triggered();
 
+    void getGame(Game* obj);
+
 private:
     Ui::MainWindow *ui;
     QSqlDatabase db; // DateBase GGStore
     QSqlQuery* myQuery; // for select
     QSqlQuery* myQuery1; // for select showTable_Library;
     QSqlQuery* myQuery2; // for select showTable_Library;
+    QSqlQuery* myQuery3; // for select showTable_Library;
 
     QVector<Account*> accounts;
     QVector<Game*> store;
-
+    Dialog_addAdv* foradv;
 };
 #endif // MAINWINDOW_H

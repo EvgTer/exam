@@ -11,11 +11,14 @@ MainWindow::MainWindow(QWidget *parent)
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("GGStore.db");
 
+    QObject::connect(foradv, SIGNAL(sendGame(Game*)),
+                     this,SLOT(getGame(Game*)));
+
     if(db.open()){
         ui->statusbar->showMessage("db is open");
         myQuery = new QSqlQuery(db);
         create_accounts();
-        create_store();
+        //create_store();
         showTable_Store();
     }
     else
@@ -52,12 +55,12 @@ void MainWindow::create_accounts()
 
     } catch (std::exception& e) {
         // Handle the exception here, for example by printing an error message
-        qDebug() << "Exception caught:" << "create_accounts member function of class mainwindow";
+       throw "Exception caught: create_accounts member function of class mainwindow";
     }
 
 }
 
-void MainWindow::create_store()
+/*void MainWindow::create_store()
 {
     try {
             //Adventure
@@ -111,10 +114,10 @@ void MainWindow::create_store()
 
     } catch (const char* ex) {
         // Handle the exception here, for example by printing an error message
-        qDebug() << "Exception caught:" << "create_store member function of class mainwindow";
+       //throw "Exception caught: create_store member function of class mainwindow";
     }
 
-}
+}*/
 
 void MainWindow::showTable_Store()
 {
@@ -254,9 +257,145 @@ void MainWindow::showTable_Store()
 
     }catch(const char* c){
 
-        qDebug() << "Exception caught:" << "showTable_store member function of class mainwindow";
+        throw "Exception caught: showTable_store member function of class mainwindow";
     }
 
+}
+
+void MainWindow::gamesToUsersLibrary(User* user)
+{
+        myQuery3->exec("SELECT id, login FROM [Users];");
+        myQuery1->exec("SELECT user_id, adventure_id,horror_id,mmorpg_id,sandbox_id,shooter_id FROM [User_Games];");
+        while(myQuery3->next()){
+            int id = myQuery3->value(0).toInt();
+            QString login = myQuery3->value(1).toString();
+            while(myQuery1->next()){
+                int user_id = myQuery1->value(0).toInt();
+                QString adventure_id = myQuery1->value(1).toString();
+                QString horror_id = myQuery1->value(2).toString();
+                QString mmorpg_id = myQuery1->value(3).toString();
+                QString sandbox_id = myQuery1->value(4).toString();
+                QString shooter_id = myQuery1->value(5).toString();
+
+                QStringList advidlist = adventure_id.split("-");
+                QStringList horidlist = horror_id.split("-");
+                QStringList mmoidlist = mmorpg_id.split("-");
+                QStringList sandidlist = sandbox_id.split("-");
+                QStringList shootidlist = shooter_id.split("-");
+
+                QList<int> advlist;
+                    foreach(QString substr, advidlist) {
+                        int num = substr.toInt();
+                        advlist.append(num);
+                }
+
+                QList<int> horlist;
+                    foreach(QString substr, horidlist) {
+                        int num = substr.toInt();
+                        horlist.append(num);
+                }
+
+                QList<int> mmolist;
+                    foreach(QString substr, mmoidlist) {
+                        int num = substr.toInt();
+                        mmolist.append(num);
+                }
+
+                QList<int> sandlist;
+                    foreach(QString substr, sandidlist) {
+                        int num = substr.toInt();
+                        sandlist.append(num);
+                }
+
+                QList<int> shootlist;
+                    foreach(QString substr, shootidlist) {
+                        int num = substr.toInt();
+                        shootlist.append(num);
+                }
+
+                if(id == user_id){
+                    int i = 0;
+                    //Adventure
+                    myQuery2->exec("SELECT id, name, price, publisher,playersAmount  FROM [Adventures];");
+                    while(myQuery2->next()){
+                        int id_adv = myQuery2->value(0).toInt();
+                        QString name = myQuery2->value(1).toString();
+                        float price = myQuery2->value(2).toFloat();
+                        QString publisher = myQuery2->value(3).toString();
+                        int playersAmount = myQuery2->value(4).toInt();
+
+                        for(int p = 0;p<advlist.size();p++){
+                            if(id_adv == advlist[p])//transfer data to vector
+                                user->getLibrary().append(new Adventure(name,price,publisher, playersAmount));
+                        }
+                        i++;
+                    }
+                    //Horror
+                    myQuery2->exec("Select id,name,price,publisher,ageLimit FROM [Horrors];");
+                    while (myQuery2->next()) {
+                        int id_hor = myQuery2->value(0).toInt();
+                        QString name = myQuery2->value(1).toString();
+                        float price = myQuery2->value(2).toFloat();
+                        QString publisher = myQuery2->value(3).toString();
+                        QString ageLimit = myQuery2->value(4).toString();
+
+                        for(int p = 0;p<horlist.size();p++){
+                            if(id_hor == horlist[p])//transfer data to vector
+                                user->getLibrary().append(new Horror(name,price,publisher, ageLimit));
+                        }
+                        i++;
+                    }
+
+                    //MMORPG
+                    myQuery2->exec("Select id,name,price,publisher,rating FROM [MMORPGs];");
+                    while (myQuery2->next()) {
+                        int id_mmo = myQuery2->value(0).toInt();
+                        QString name = myQuery2->value(1).toString();
+                        float price = myQuery2->value(2).toFloat();
+                        QString publisher = myQuery2->value(3).toString();
+                        int rating = myQuery2->value(4).toInt();
+
+                        for(int p = 0;p<mmolist.size();p++){
+                            if(id_mmo == mmolist[p])//transfer data to vector
+                                user->getLibrary().append(new MMORPG(name,price,publisher,rating ));
+                        }
+                        i++;
+                    }
+
+                    //Sandbox
+                    myQuery2->exec("Select id,name,price,publisher FROM [Sandboxes];");
+                    while (myQuery2->next()) {
+                        int id_sand = myQuery2->value(0).toInt();
+                        QString name = myQuery2->value(1).toString();
+                        float price = myQuery2->value(2).toFloat();
+                        QString publisher = myQuery2->value(3).toString();
+
+                        for(int p = 0;p<sandlist.size();p++){
+                            if(id_sand == sandlist[p])//transfer data to vector
+                                user->getLibrary().append(new Sandbox(name,price,publisher));
+                        }
+                        i++;
+                    }
+
+                    //Shooter
+                    myQuery2->exec("Select id,name,price,publisher,weaponAmount FROM [Shooters];");
+                    while (myQuery2->next()) {
+                        int id_shoot = myQuery2->value(0).toInt();
+                        QString name = myQuery2->value(1).toString();
+                        float price = myQuery2->value(2).toFloat();
+                        QString publisher = myQuery2->value(3).toString();
+                        int weaponAmount = myQuery->value(4).toInt();
+
+                        for(int p = 0;p<shootlist.size();p++){
+                            if(id_shoot == shootlist[p])//transfer data to vector
+                                user->getLibrary().append(new Shooter(name,price,publisher,weaponAmount));
+                        }
+                        i++;
+
+                    }
+                }
+            }
+        }
 }
 
 void MainWindow::on_pushButton_log_clicked()
@@ -280,265 +419,24 @@ void MainWindow::on_pushButton_log_clicked()
                 QMessageBox::about(this,"Succes", ui->lineEdit_Login->text() +", you successfully logged in as user!");
 
 
-                Account* user = accounts[i];
+                try{
+                    //gamesToUsersLibrary((User*)(accounts[i]));
 
-                    myQuery->exec("SELECT id, login FROM [Users];");
-                    myQuery1->exec("SELECT user_id, adventure_id,horror_id,mmorpg_id,sandbox_id,shooter_id FROM [User_Games];");
-                    while(myQuery->next()){
-                        int id = myQuery->value(0).toInt();
-                        QString login = myQuery->value(1).toString();
-                        while(myQuery1->next()){
-                            int user_id = myQuery1->value(0).toInt();
-                            QString adventure_id = myQuery1->value(1).toString();
-                            QString horror_id = myQuery1->value(2).toString();
-                            QString mmorpg_id = myQuery1->value(3).toString();
-                            QString sandbox_id = myQuery1->value(4).toString();
-                            QString shooter_id = myQuery1->value(5).toString();
+                }
+                catch(const char& exept){
+                    throw "Error with library table in pushButton_log in mainwindow.cpp";
+                }
 
-                            QStringList advidlist = adventure_id.split("-");
-                            QStringList horidlist = horror_id.split("-");
-                            QStringList mmoidlist = mmorpg_id.split("-");
-                            QStringList sandidlist = sandbox_id.split("-");
-                            QStringList shootidlist = shooter_id.split("-");
+                return;
 
-                            QList<int> advlist;
-                            foreach(QString substr, advidlist) {
-                                int num = substr.toInt();
-                                advlist.append(num);
-                            }
-
-                            QList<int> horlist;
-                            foreach(QString substr, horidlist) {
-                                int num = substr.toInt();
-                                horlist.append(num);
-                            }
-
-                            QList<int> mmolist;
-                            foreach(QString substr, mmoidlist) {
-                                int num = substr.toInt();
-                                mmolist.append(num);
-                            }
-
-                            QList<int> sandlist;
-                            foreach(QString substr, sandidlist) {
-                                int num = substr.toInt();
-                                sandlist.append(num);
-                            }
-
-                            QList<int> shootlist;
-                            foreach(QString substr, shootidlist) {
-                                int num = substr.toInt();
-                                shootlist.append(num);
-                            }
-
-
-                            if(user->getLogin() == login){
-                                if(id == user_id){
-
-                                    int j = 0;
-
-                                    try{
-                                        //Adventure
-                                        myQuery2->exec("SELECT id,name, price, publisher FROM [Adventures];");
-                                        while(myQuery2->next()){
-                                        int adv_id = myQuery2->value(0).toInt();
-                                        QString name = myQuery2->value(1).toString();
-                                        float price = myQuery2->value(2).toFloat();
-                                        QString publisher = myQuery2->value(3).toString();
-
-                                            for(int o = 0; o < advlist.size(); o++){
-                                                if (advlist[o] == adv_id){
-                                                ui->tableWidget_library->setRowCount(j+1);
-
-                                                QTableWidgetItem* cellName = new QTableWidgetItem();
-                                                QTableWidgetItem* cellPrice = new QTableWidgetItem();
-                                                QTableWidgetItem* cellGenre = new QTableWidgetItem();
-                                                QTableWidgetItem* cellPublisher = new QTableWidgetItem();
-
-                                                cellName->setText(name);
-                                                cellPrice->setText(QString().setNum(price));
-                                                cellGenre->setText("Adventure");
-                                                cellPublisher->setText(publisher);
-
-                                                ui->tableWidget_library->setItem(j,0,cellName);
-                                                ui->tableWidget_library->setItem(j,1,cellPrice);
-                                                ui->tableWidget_library->setItem(j,2,cellGenre);
-                                                ui->tableWidget_library->setItem(j,3,cellPublisher);
-
-                                                j++;
-
-                                                }
-
-                                            }
-
-                                        }
-
-                                    //Horror
-                                        myQuery2->exec("SELECT id,name, price, publisher FROM [Horrors];");
-                                        while(myQuery2->next()){
-                                        int hor_id = myQuery2->value(0).toInt();
-                                        QString name = myQuery2->value(1).toString();
-                                        float price = myQuery2->value(2).toFloat();
-                                        QString publisher = myQuery2->value(3).toString();
-
-                                            for(int o = 0; o < horlist.size(); o++){
-                                                if (horlist[o] == hor_id){
-                                                ui->tableWidget_library->setRowCount(j+1);
-
-                                                QTableWidgetItem* cellName = new QTableWidgetItem();
-                                                QTableWidgetItem* cellPrice = new QTableWidgetItem();
-                                                QTableWidgetItem* cellGenre = new QTableWidgetItem();
-                                                QTableWidgetItem* cellPublisher = new QTableWidgetItem();
-
-                                                cellName->setText(name);
-                                                cellPrice->setText(QString().setNum(price));
-                                                cellGenre->setText("Horror");
-                                                cellPublisher->setText(publisher);
-
-                                                ui->tableWidget_library->setItem(j,0,cellName);
-                                                ui->tableWidget_library->setItem(j,1,cellPrice);
-                                                ui->tableWidget_library->setItem(j,2,cellGenre);
-                                                ui->tableWidget_library->setItem(j,3,cellPublisher);
-
-                                                j++;
-
-                                                }
-
-                                            }
-
-                                        }
-
-
-                                    //MMORPG
-                                        myQuery2->exec("SELECT id,name, price, publisher FROM [MMORPGs];");
-                                        while(myQuery2->next()){
-                                        int mmo_id = myQuery2->value(0).toInt();
-                                        QString name = myQuery2->value(1).toString();
-                                        float price = myQuery2->value(2).toFloat();
-                                        QString publisher = myQuery2->value(3).toString();
-
-                                            for(int o = 0; o < mmolist.size(); o++){
-                                                if (mmolist[o] == mmo_id){
-                                                ui->tableWidget_library->setRowCount(j+1);
-
-                                                QTableWidgetItem* cellName = new QTableWidgetItem();
-                                                QTableWidgetItem* cellPrice = new QTableWidgetItem();
-                                                QTableWidgetItem* cellGenre = new QTableWidgetItem();
-                                                QTableWidgetItem* cellPublisher = new QTableWidgetItem();
-
-                                                cellName->setText(name);
-                                                cellPrice->setText(QString().setNum(price));
-                                                cellGenre->setText("MMORPG");
-                                                cellPublisher->setText(publisher);
-
-                                                ui->tableWidget_library->setItem(j,0,cellName);
-                                                ui->tableWidget_library->setItem(j,1,cellPrice);
-                                                ui->tableWidget_library->setItem(j,2,cellGenre);
-                                                ui->tableWidget_library->setItem(j,3,cellPublisher);
-
-                                                j++;
-
-                                                }
-
-                                            }
-
-                                        }
-                                    //Sandbox
-                                        myQuery2->exec("SELECT id,name, price, publisher FROM [Sandboxes];");
-                                        while(myQuery2->next()){
-                                        int sand_id = myQuery2->value(0).toInt();
-                                        QString name = myQuery2->value(1).toString();
-                                        float price = myQuery2->value(2).toFloat();
-                                        QString publisher = myQuery2->value(3).toString();
-
-                                            for(int o = 0; o < sandlist.size(); o++){
-                                                if (sandlist[o] == sand_id){
-                                                ui->tableWidget_library->setRowCount(j+1);
-
-                                                QTableWidgetItem* cellName = new QTableWidgetItem();
-                                                QTableWidgetItem* cellPrice = new QTableWidgetItem();
-                                                QTableWidgetItem* cellGenre = new QTableWidgetItem();
-                                                QTableWidgetItem* cellPublisher = new QTableWidgetItem();
-
-                                                cellName->setText(name);
-                                                cellPrice->setText(QString().setNum(price));
-                                                cellGenre->setText("Sandbox");
-                                                cellPublisher->setText(publisher);
-
-                                                ui->tableWidget_library->setItem(j,0,cellName);
-                                                ui->tableWidget_library->setItem(j,1,cellPrice);
-                                                ui->tableWidget_library->setItem(j,2,cellGenre);
-                                                ui->tableWidget_library->setItem(j,3,cellPublisher);
-
-                                                j++;
-
-                                                }
-
-                                            }
-
-                                        }
-                                    //Shooter
-                                        myQuery2->exec("SELECT id,name, price, publisher FROM [Sandboxes];");
-                                        while(myQuery2->next()){
-                                        int shoot_id = myQuery2->value(0).toInt();
-                                        QString name = myQuery2->value(1).toString();
-                                        float price = myQuery2->value(2).toFloat();
-                                        QString publisher = myQuery2->value(3).toString();
-
-                                            for(int o = 0; o < shootlist.size(); o++){
-                                                if (shootlist[o] == shoot_id){
-                                                ui->tableWidget_library->setRowCount(j+1);
-
-                                                QTableWidgetItem* cellName = new QTableWidgetItem();
-                                                QTableWidgetItem* cellPrice = new QTableWidgetItem();
-                                                QTableWidgetItem* cellGenre = new QTableWidgetItem();
-                                                QTableWidgetItem* cellPublisher = new QTableWidgetItem();
-
-                                                cellName->setText(name);
-                                                cellPrice->setText(QString().setNum(price));
-                                                cellGenre->setText("Shooter");
-                                                cellPublisher->setText(publisher);
-
-                                                ui->tableWidget_library->setItem(j,0,cellName);
-                                                ui->tableWidget_library->setItem(j,1,cellPrice);
-                                                ui->tableWidget_library->setItem(j,2,cellGenre);
-                                                ui->tableWidget_library->setItem(j,3,cellPublisher);
-
-                                                j++;
-
-                                                }
-
-                                            }
-
-                                        }
-
-                                    }catch(const char* c){
-
-                                        qDebug() << "Exception caught:" << "showTable_library part function of pushButton_log of class mainwindow";
-                                    }
-
-
-
-                                }
-                                throw "Error id != user_id in showTable_Library";
-                            }
-                        }
-                    }
-
-
-
-
-
-            }
-            else if(ui->lineEdit_Login->text() == accounts[i]->getLogin() && ui->lineEdit_password->text() == accounts[i]->getPassword()&& accounts[i]->getType() == "Admin"){
+            }else if(ui->lineEdit_Login->text() == accounts[i]->getLogin() && ui->lineEdit_password->text() == accounts[i]->getPassword()&& accounts[i]->getType() == "Admin"){
                 QMessageBox::about(this,"Oh, no", ui->lineEdit_Login->text() +", you are try ing to log for another type of account(\ntry to change it!");
                 return;
             }
         }
-
     }
 
-    QMessageBox::about(this,"Error" ,tr("Incorrect login or password!\nPlease try again!"));
+    QMessageBox::about(this,"Error" ,"Choose account!\nUser/Admin!");
 }
 
 
@@ -585,12 +483,67 @@ void MainWindow::on_pushButton_sign_clicked()
             }
 
         }
-
 }
+
 
 
 void MainWindow::on_actionAdventure_triggered()
 {
+    foradv->show();
+}
+
+void MainWindow::getGame(Game *obj)
+{
+    if (obj->getGenre() == "Adventure") {
+        myQuery->prepare("INSERT INTO Adventures(name,price,publisher,playersAmount) VALUES(:name,:price,:publisher,:playersAmount);");
+        myQuery->bindValue(":name", obj->getName());
+        myQuery->bindValue(":price", obj->getPrice());
+        myQuery->bindValue(":publisher", obj->getPublisher());
+        //Adventure* adven = dynamic_cast<Adventure*>(obj); //errors
+        //Adventure* adven = &(obj);;
+        //myQuery->bindValue(":playersAmount", adven->getAmountOfPlayers());
+
+    }else if(obj->getGenre() =="Horror"){
+        myQuery->prepare("INSERT INTO [Horrors](name,price,publisher,ageLimit) VALUES(:name,:price,:publisher,:ageLimit);");
+        myQuery->bindValue(":name", obj->getName());
+        myQuery->bindValue(":price", obj->getPrice());
+        myQuery->bindValue(":publisher", obj->getPublisher());
+        //Horror* horror = &(obj);
+        //myQuery->bindValue(":ageLimit", horror->getAgeLimit());
+
+      }else if(obj->getGenre() =="MMORPG"){
+        myQuery->prepare("INSERT INTO [MMORPGs](name,price,publisher,rating) VALUES(:name,:price,:publisher,:rating);");
+        myQuery->bindValue(":name", obj->getName());
+        myQuery->bindValue(":price", obj->getPrice());
+        myQuery->bindValue(":publisher", obj->getPublisher());
+        //MMORPG* mmorpf = &(obj);
+        //myQuery->bindValue(":rating", mmorpf->getRating());
+
+
+    }else if(obj->getGenre() =="Sandbox"){
+        myQuery->prepare("INSERT INTO [Sandboxes](name,price,publisher) VALUES(:name,:price,:publisher);");
+        myQuery->bindValue(":name", obj->getName());
+        myQuery->bindValue(":price", obj->getPrice());
+        myQuery->bindValue(":publisher", obj->getPublisher());
+
+
+     }else if(obj->getGenre() =="Shooter"){
+        myQuery->prepare("INSERT INTO [Shooters](name,price,publisher,weaponAmount) VALUES(:name,:price,:publisher,:weaponAmount);");
+        myQuery->bindValue(":name", obj->getName());
+        myQuery->bindValue(":price", obj->getPrice());
+        myQuery->bindValue(":publisher", obj->getPublisher());
+        //Shooter* shootr = &(obj);
+        //myQuery->bindValue(":weaponAmount", shootr->getWeaponAmount());
+
+    }
+
+    if(myQuery->exec()){
+        QMessageBox::about(this,"Succes","New game succesfully added to the store!");
+        showTable_Store();
+    }
+    else{
+        QMessageBox::about(this,"Error","New game didnt add to the store!");
+    }
 
 }
 

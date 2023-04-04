@@ -37,7 +37,7 @@ background-color: rgb(255,255,255);
 </string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -349,6 +349,7 @@ color: rgb(0,0,0);
     </widget>
    </widget>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -360,45 +361,28 @@ color: rgb(0,0,0);
    </property>
    <widget class="QMenu" name="menuAdd_game">
     <property name="title">
-     <string>Add game</string>
+     <string>Menu</string>
     </property>
+    <addaction name="separator"/>
     <addaction name="actionAdventure"/>
     <addaction name="actionHorror"/>
     <addaction name="actionMMORPG"/>
-    <addaction name="actionSandbox"/>
-    <addaction name="actionShooter"/>
-   </widget>
-   <widget class="QMenu" name="menuDelete">
-    <property name="title">
-     <string>Delete game</string>
-    </property>
-    <addaction name="actionBrowse"/>
-   </widget>
-   <widget class="QMenu" name="menuBalance">
-    <property name="title">
-     <string>Balance</string>
-    </property>
-    <addaction name="actionShow_info"/>
-    <addaction name="actionAdd"/>
    </widget>
    <addaction name="menuAdd_game"/>
-   <addaction name="menuDelete"/>
-   <addaction name="menuBalance"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionAdventure">
    <property name="text">
-    <string>Adventure</string>
+    <string>Add Game</string>
    </property>
   </action>
   <action name="actionHorror">
    <property name="text">
-    <string>Horror</string>
+    <string>Delete Game</string>
    </property>
   </action>
   <action name="actionMMORPG">
    <property name="text">
-    <string>MMORPG</string>
+    <string>Balance</string>
    </property>
   </action>
   <action name="actionSandbox">
