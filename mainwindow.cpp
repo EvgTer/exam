@@ -17,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
     if(db.open()){
         ui->statusbar->showMessage("db is open");
         myQuery = new QSqlQuery(db);
+        myQuery1 = new QSqlQuery(db);
+        myQuery2 = new QSqlQuery(db);
+        myQuery3 = new QSqlQuery(db);
         create_accounts();
         //create_store();
         showTable_Store();
@@ -417,10 +420,9 @@ void MainWindow::on_pushButton_log_clicked()
             if(ui->lineEdit_Login->text() == accounts[i]->getLogin() && ui->lineEdit_password->text() == accounts[i]->getPassword()&& accounts[i]->getType() == "User"){
 
                 QMessageBox::about(this,"Succes", ui->lineEdit_Login->text() +", you successfully logged in as user!");
-
-
+                mainUser = (User*)accounts[i];
                 try{
-                    //gamesToUsersLibrary((User*)(accounts[i]));
+                    gamesToUsersLibrary( dynamic_cast<User*>(accounts[i]));
 
                 }
                 catch(const char& exept){
@@ -543,6 +545,29 @@ void MainWindow::getGame(Game *obj)
     }
     else{
         QMessageBox::about(this,"Error","New game didnt add to the store!");
+    }
+
+}
+
+
+void MainWindow::on_actionMMORPG_triggered()
+{
+    bal->show();
+}
+
+
+void MainWindow::on_actionHorror_triggered()
+{
+    del->show();
+}
+
+void MainWindow::on_tableWidget_store_itemDoubleClicked(QTableWidgetItem *item)
+{
+    try{
+        mainUser->addGame((Game*)(item));
+    }
+    catch(const char* exept){
+        QMessageBox::about(this,"Buy", "Something gone wrong!");
     }
 
 }

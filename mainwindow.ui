@@ -37,7 +37,7 @@ background-color: rgb(255,255,255);
 </string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -383,31 +383,6 @@ color: rgb(0,0,0);
   <action name="actionMMORPG">
    <property name="text">
     <string>Balance</string>
-   </property>
-  </action>
-  <action name="actionSandbox">
-   <property name="text">
-    <string>Sandbox</string>
-   </property>
-  </action>
-  <action name="actionShooter">
-   <property name="text">
-    <string>Shooter</string>
-   </property>
-  </action>
-  <action name="actionBrowse">
-   <property name="text">
-    <string>Browse</string>
-   </property>
-  </action>
-  <action name="actionShow_info">
-   <property name="text">
-    <string>Show info</string>
-   </property>
-  </action>
-  <action name="actionAdd">
-   <property name="text">
-    <string>Add</string>
    </property>
   </action>
  </widget>

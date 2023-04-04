@@ -13,6 +13,8 @@ SOURCES += \
     admin.cpp \
     adventure.cpp \
     dialog_addadv.cpp \
+    dialog_balance.cpp \
+    dialog_delete.cpp \
     game.cpp \
     horror.cpp \
     main.cpp \
@@ -27,6 +29,8 @@ HEADERS += \
     admin.h \
     adventure.h \
     dialog_addadv.h \
+    dialog_balance.h \
+    dialog_delete.h \
     game.h \
     horror.h \
     mainwindow.h \
@@ -37,6 +41,8 @@ HEADERS += \
 
 FORMS += \
     dialog_addadv.ui \
+    dialog_balance.ui \
+    dialog_delete.ui \
     mainwindow.ui
 
 # Default rules for deployment.

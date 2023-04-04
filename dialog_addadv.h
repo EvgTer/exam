@@ -2,6 +2,10 @@
 #define DIALOG_ADDADV_H
 
 #include <QDialog>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QMessageBox>
+
 #include "adventure.h"
 #include "horror.h"
 #include "mmorpg.h"
@@ -25,6 +29,9 @@ private slots:
 
 private:
     Ui::Dialog_addAdv *ui;
+    QSqlDatabase db; // DateBase GGStore
+    QSqlQuery* myQuery; // for select
+
 };
 
 #endif // DIALOG_ADDADV_H

@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QDialog>
+#include <QTableWidgetItem>
 
 //Accounts
 #include "user.h"
@@ -20,6 +21,8 @@
 #include "shooter.h"
 
 #include "dialog_addadv.h"
+#include "dialog_delete.h"
+#include "dialog_balance.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -50,6 +53,12 @@ private slots:
 
     void getGame(Game* obj);
 
+    void on_actionMMORPG_triggered();
+
+    void on_actionHorror_triggered();
+
+    void on_tableWidget_store_itemDoubleClicked(QTableWidgetItem *item);
+
 private:
     Ui::MainWindow *ui;
     QSqlDatabase db; // DateBase GGStore
@@ -61,5 +70,9 @@ private:
     QVector<Account*> accounts;
     QVector<Game*> store;
     Dialog_addAdv* foradv;
+    Dialog_delete* del;
+    Dialog_balance* bal;
+
+    User* mainUser;
 };
 #endif // MAINWINDOW_H
