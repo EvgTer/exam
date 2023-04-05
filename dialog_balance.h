@@ -24,6 +24,7 @@ private slots:
 
     void on_pushButton_clicked();
 
+
 private:
     Ui::Dialog_balance *ui;
     QSqlDatabase db; // DateBase GGStore

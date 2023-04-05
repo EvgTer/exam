@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("GGStore.db");
 
+    foradv = new Dialog_addAdv();
     QObject::connect(foradv, SIGNAL(sendGame(Game*)),
                      this,SLOT(getGame(Game*)));
 
@@ -37,11 +38,11 @@ MainWindow::~MainWindow()
 void MainWindow::create_accounts()
 {
     try {
-            myQuery->exec("SELECT login, password, balance FROM [Users];");
+            myQuery->exec("SELECT * FROM [Users];");
             while (myQuery->next()) {
-            QString login = myQuery->value(0).toString();
-            QString password = myQuery->value(1).toString();
-            float balance = myQuery->value(2).toFloat();
+            QString login = myQuery->value("login").toString();
+            QString password = myQuery->value("password").toString();
+            float balance = myQuery->value("balance").toFloat();
 
             accounts.append(new User(login, password, balance));
             }
@@ -417,19 +418,22 @@ void MainWindow::on_pushButton_log_clicked()
         }
     }else if(ui->radioButton_user->isChecked() == true){
         for (int i = 0; i < accounts.size(); ++i) {
-            if(ui->lineEdit_Login->text() == accounts[i]->getLogin() && ui->lineEdit_password->text() == accounts[i]->getPassword()&& accounts[i]->getType() == "User"){
+                 if(ui->lineEdit_Login->text() == accounts[i]->getLogin() &&
+                    ui->lineEdit_password->text() == accounts[i]->getPassword() &&
+                    accounts[i]->getType() == "User"){
 
-                QMessageBox::about(this,"Succes", ui->lineEdit_Login->text() +", you successfully logged in as user!");
-                mainUser = (User*)accounts[i];
-                try{
-                    gamesToUsersLibrary( dynamic_cast<User*>(accounts[i]));
+                     QMessageBox::about(this,"Success", ui->lineEdit_Login->text() +", you successfully logged in as user!");
+                     mainUser = dynamic_cast<User*>(accounts[i]);
+                     try{
+                         gamesToUsersLibrary(dynamic_cast<User*>(accounts[i]));
+                     }
+                     catch(const char& exept){
 
-                }
-                catch(const char& exept){
-                    throw "Error with library table in pushButton_log in mainwindow.cpp";
-                }
+                         throw "Error with library table in pushButton_log in mainwindow.cpp";
+                     }
 
-                return;
+                     return;
+
 
             }else if(ui->lineEdit_Login->text() == accounts[i]->getLogin() && ui->lineEdit_password->text() == accounts[i]->getPassword()&& accounts[i]->getType() == "Admin"){
                 QMessageBox::about(this,"Oh, no", ui->lineEdit_Login->text() +", you are try ing to log for another type of account(\ntry to change it!");

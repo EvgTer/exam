@@ -6,6 +6,11 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 
+#include "adventure.h"
+#include "horror.h"
+#include "mmorpg.h"
+#include "sandbox.h"
+#include "shooter.h"
 namespace Ui {
 class Dialog_delete;
 }
@@ -17,6 +22,8 @@ class Dialog_delete : public QDialog
 public:
     explicit Dialog_delete(QWidget *parent = nullptr);
     ~Dialog_delete();
+signals:
+    void sendGame(Game* obj);
 
 private slots:
     void on_pushButton_del_clicked();
