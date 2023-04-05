@@ -23,16 +23,13 @@ public:
     explicit Dialog_delete(QWidget *parent = nullptr);
     ~Dialog_delete();
 signals:
-    void sendGame(Game* obj);
+    void sendDel(QString name);
 
 private slots:
     void on_pushButton_del_clicked();
 
 private:
     Ui::Dialog_delete *ui;
-    QSqlDatabase db; // DateBase GGStore
-    QSqlQuery* myQuery; // for select
-
 };
 
 #endif // DIALOG_DELETE_H

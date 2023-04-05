@@ -17,13 +17,11 @@ class Dialog_balance : public QDialog
 public:
     explicit Dialog_balance(QWidget *parent = nullptr);
     ~Dialog_balance();
-
+signals:
+    void sendBalance(QString name, float balance);
 private slots:
 
-    void on_pushButton_show_clicked();
-
     void on_pushButton_clicked();
-
 
 private:
     Ui::Dialog_balance *ui;

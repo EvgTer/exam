@@ -54,6 +54,10 @@ private slots:
 
     void getGame(Game* obj);
 
+    void getBalance(QString name, float balance);
+
+    void getDel(QString name);
+
     void on_actionMMORPG_triggered();
 
     void on_actionHorror_triggered();

@@ -15,6 +15,16 @@ MainWindow::MainWindow(QWidget *parent)
     QObject::connect(foradv, SIGNAL(sendGame(Game*)),
                      this,SLOT(getGame(Game*)));
 
+    bal = new Dialog_balance();
+    QObject::connect(bal, SIGNAL(sendBalance(QString name,float balance)),
+                     this,SLOT(getBalance(QString name,float balance)));
+
+
+    del = new Dialog_delete();
+    QObject::connect(del, SIGNAL(sendDel(QString name)),
+                     this,SLOT(getDel(QString name)));
+
+
     if(db.open()){
         ui->statusbar->showMessage("db is open");
         myQuery = new QSqlQuery(db);
@@ -54,6 +64,13 @@ void MainWindow::create_accounts()
             QString password = myQuery->value(1).toString();
 
             accounts.append(new Admin(login, password));
+            }
+
+
+            for(auto user : accounts){
+                if(user->getType() == "User"){
+                    gamesToUsersLibrary((User*)(user));
+                }
             }
 
 
@@ -423,9 +440,173 @@ void MainWindow::on_pushButton_log_clicked()
                     accounts[i]->getType() == "User"){
 
                      QMessageBox::about(this,"Success", ui->lineEdit_Login->text() +", you successfully logged in as user!");
+
                      mainUser = dynamic_cast<User*>(accounts[i]);
+                     ui->label_balance->setText(QString().number(mainUser->getBalance()));
+
                      try{
-                         gamesToUsersLibrary(dynamic_cast<User*>(accounts[i]));
+
+                         int i = 0;
+                         try{
+                         //Adventure
+                         myQuery->exec("SELECT name, price, publisher FROM [Adventures];");
+                         while(myQuery->next()){
+                             QString name = myQuery->value(0).toString();
+                             float price = myQuery->value(1).toFloat();
+                             QString publisher = myQuery->value(2).toString();
+
+                             for(auto game : mainUser->getLibrary()){
+                                 if(game->getGenre() == "Adventure"&& game->getName()==name){
+                                     //transfer data to table
+                                     ui->tableWidget_library->setRowCount(i+1);
+
+                                     QTableWidgetItem* cellName = new QTableWidgetItem();
+                                     QTableWidgetItem* cellPrice = new QTableWidgetItem();
+                                     QTableWidgetItem* cellGenre = new QTableWidgetItem();
+                                     QTableWidgetItem* cellPublisher = new QTableWidgetItem();
+
+                                     cellName->setText(name);
+                                     cellPrice->setText(QString().setNum(price));
+                                     cellGenre->setText("Adventure");
+                                     cellPublisher->setText(publisher);
+
+                                     ui->tableWidget_library->setItem(i,0,cellName);
+                                     ui->tableWidget_library->setItem(i,1,cellPrice);
+                                     ui->tableWidget_library->setItem(i,2,cellGenre);
+                                     ui->tableWidget_library->setItem(i,3,cellPublisher);
+                                     i++;
+                                 }
+                             }
+
+
+                         }
+                         //Horror
+                         myQuery->exec("SELECT name, price, publisher FROM [Horrors];");
+                         while(myQuery->next()){
+                             QString name = myQuery->value(0).toString();
+                             float price = myQuery->value(1).toFloat();
+                             QString publisher = myQuery->value(2).toString();
+                             for(auto game : mainUser->getLibrary()){
+                                 if(game->getGenre() == "Horror"&& game->getName()==name){
+
+                             //transfer data to table
+                             ui->tableWidget_library->setRowCount(i+1);
+
+                             QTableWidgetItem* cellName = new QTableWidgetItem();
+                             QTableWidgetItem* cellPrice = new QTableWidgetItem();
+                             QTableWidgetItem* cellGenre = new QTableWidgetItem();
+                             QTableWidgetItem* cellPublisher = new QTableWidgetItem();
+
+                             cellName->setText(name);
+                             cellPrice->setText(QString().setNum(price));
+                             cellGenre->setText("Horror");
+                             cellPublisher->setText(publisher);
+
+                             ui->tableWidget_library->setItem(i,0,cellName);
+                             ui->tableWidget_library->setItem(i,1,cellPrice);
+                             ui->tableWidget_library->setItem(i,2,cellGenre);
+                             ui->tableWidget_library->setItem(i,3,cellPublisher);
+                             i++;
+                                }
+                             }
+                         }
+                         //MMORPG
+                         myQuery->exec("SELECT name, price, publisher FROM [MMORPGs];");
+                         while(myQuery->next()){
+                             QString name = myQuery->value(0).toString();
+                             float price = myQuery->value(1).toFloat();
+                             QString publisher = myQuery->value(2).toString();
+                             for(auto game : mainUser->getLibrary()){
+                                 if(game->getGenre() == "MMORPG"&& game->getName()==name){
+
+                             //transfer data to table
+                             ui->tableWidget_library->setRowCount(i+1);
+
+                             QTableWidgetItem* cellName = new QTableWidgetItem();
+                             QTableWidgetItem* cellPrice = new QTableWidgetItem();
+                             QTableWidgetItem* cellGenre = new QTableWidgetItem();
+                             QTableWidgetItem* cellPublisher = new QTableWidgetItem();
+
+                             cellName->setText(name);
+                             cellPrice->setText(QString().setNum(price));
+                             cellGenre->setText("MMORPG");
+                             cellPublisher->setText(publisher);
+
+                             ui->tableWidget_library->setItem(i,0,cellName);
+                             ui->tableWidget_library->setItem(i,1,cellPrice);
+                             ui->tableWidget_library->setItem(i,2,cellGenre);
+                             ui->tableWidget_library->setItem(i,3,cellPublisher);
+                             i++;
+                                }
+                             }
+                         }
+                         //Sandbox
+                         myQuery->exec("SELECT name, price, publisher FROM [Sandboxes];");
+                         while(myQuery->next()){
+                             QString name = myQuery->value(0).toString();
+                             float price = myQuery->value(1).toFloat();
+                             QString publisher = myQuery->value(2).toString();
+                             for(auto game : mainUser->getLibrary()){
+                                 if(game->getGenre() == "Sandbox"&& game->getName()==name){
+
+
+                             //transfer data to table
+                             ui->tableWidget_library->setRowCount(i+1);
+
+                             QTableWidgetItem* cellName = new QTableWidgetItem();
+                             QTableWidgetItem* cellPrice = new QTableWidgetItem();
+                             QTableWidgetItem* cellGenre = new QTableWidgetItem();
+                             QTableWidgetItem* cellPublisher = new QTableWidgetItem();
+
+                             cellName->setText(name);
+                             cellPrice->setText(QString().setNum(price));
+                             cellGenre->setText("Sandbox");
+                             cellPublisher->setText(publisher);
+
+                             ui->tableWidget_library->setItem(i,0,cellName);
+                             ui->tableWidget_library->setItem(i,1,cellPrice);
+                             ui->tableWidget_library->setItem(i,2,cellGenre);
+                             ui->tableWidget_library->setItem(i,3,cellPublisher);
+                             i++;
+                                }
+                             }
+                         }
+                         //Shooter
+                         myQuery->exec("SELECT name, price, publisher FROM [Shooters];");
+                         while(myQuery->next()){
+                             QString name = myQuery->value(0).toString();
+                             float price = myQuery->value(1).toFloat();
+                             QString publisher = myQuery->value(2).toString();
+                             for(auto game : mainUser->getLibrary()){
+                                 if(game->getGenre() == "Shooter"&& game->getName()==name){
+
+
+                             //transfer data to table
+                             ui->tableWidget_library->setRowCount(i+1);
+
+                             QTableWidgetItem* cellName = new QTableWidgetItem();
+                             QTableWidgetItem* cellPrice = new QTableWidgetItem();
+                             QTableWidgetItem* cellGenre = new QTableWidgetItem();
+                             QTableWidgetItem* cellPublisher = new QTableWidgetItem();
+
+                             cellName->setText(name);
+                             cellPrice->setText(QString().setNum(price));
+                             cellGenre->setText("Shooter");
+                             cellPublisher->setText(publisher);
+
+                             ui->tableWidget_library->setItem(i,0,cellName);
+                             ui->tableWidget_library->setItem(i,1,cellPrice);
+                             ui->tableWidget_library->setItem(i,2,cellGenre);
+                             ui->tableWidget_library->setItem(i,3,cellPublisher);
+                             i++;
+                                }
+                             }
+                         }
+
+                         }catch(const char& c){
+
+                             throw "Exception caught: showTable_library in pushButton_log member function of class mainwindow";
+                         }
                      }
                      catch(const char& exept){
 
@@ -551,6 +732,129 @@ void MainWindow::getGame(Game *obj)
         QMessageBox::about(this,"Error","New game didnt add to the store!");
     }
 
+}
+
+void MainWindow::getBalance(QString name, float balance)
+{
+
+    myQuery->exec("SELECT login, balance from [Users];");
+    while(myQuery->next()){
+        QString login = myQuery->value(0).toString();
+        float balanceOrigin = myQuery->value(1).toFloat();
+        if(name == login){
+            myQuery->prepare("UPDATE [Users] SET balance = :balance WHERE login = :login;");
+            myQuery->bindValue(":balance", balanceOrigin + balance);
+            myQuery->bindValue(":login", login);
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Add"," you succesfully increased your balance!");
+                ui->label_balance->setText(QString().setNum(balance + balanceOrigin));
+            }
+            else{
+                QMessageBox::about(this,"Add"," error with exec!");
+
+            }
+        }
+    }
+}
+
+void MainWindow::getDel(QString name)
+{
+    try{
+    //Adventure
+    myQuery->exec("SELECT name FROM [Adventures];");
+    while(myQuery->next()){
+        QString nameG = myQuery->value(0).toString();
+
+        if(name == nameG){
+            myQuery->prepare("DELETE FROM [Adventures] where name = :nameG;");
+            myQuery->bindValue(":nameG", name);
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Delete",name + " succesfuly deleted!");
+            }
+            else{
+                QMessageBox::about(this,"Delete",name + " deleting went wrong!");
+            }
+            return;
+        }
+
+    }
+    //Horror
+    myQuery->exec("SELECT name FROM [Horrors];");
+    while(myQuery->next()){
+        QString nameG = myQuery->value(0).toString();
+
+        if(name == nameG){
+            myQuery->prepare("DELETE FROM [Horrors] where name = :nameG;");
+            myQuery->bindValue(":nameG", name);
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Delete",name + " succesfuly deleted!");
+            }
+            else{
+                QMessageBox::about(this,"Delete",name + " deleting went wrong!");
+            }
+            return;
+        }
+
+    }
+    //MMORPG
+    myQuery->exec("SELECT name FROM [MMORPGs];");
+    while(myQuery->next()){
+        QString nameG = myQuery->value(0).toString();
+
+        if(name == nameG){
+            myQuery->prepare("DELETE FROM [MMORPGs] where name = :nameG;");
+            myQuery->bindValue(":nameG", name);
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Delete",name + " succesfuly deleted!");
+            }
+            else{
+                QMessageBox::about(this,"Delete",name + " deleting went wrong!");
+            }
+            return;
+        }
+
+    }
+    //Sandbox
+    myQuery->exec("SELECT name FROM [Sandboxes];");
+    while(myQuery->next()){
+        QString nameG = myQuery->value(0).toString();
+
+        if(name == nameG){
+            myQuery->prepare("DELETE FROM [Sandboxes] where name = :nameG;");
+            myQuery->bindValue(":nameG", name);
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Delete",name + " succesfuly deleted!");
+            }
+            else{
+                QMessageBox::about(this,"Delete",name + " deleting went wrong!");
+            }
+            return;
+        }
+
+    }
+    //Shooter
+    myQuery->exec("SELECT name FROM [Shooters];");
+    while(myQuery->next()){
+        QString nameG = myQuery->value(0).toString();
+
+        if(name == nameG){
+            myQuery->prepare("DELETE FROM [Shooters] where name = :nameG;");
+            myQuery->bindValue(":nameG", name);
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Delete",name + " succesfuly deleted!");
+            }
+            else{
+                QMessageBox::about(this,"Delete",name + " deleting went wrong!");
+            }
+            return;
+        }
+
+    }
+
+    }catch(const char* c){
+
+        throw "Exception caught: getDel member function of class mainwindow, signal from dialog_delete";
+    }
 }
 
 
