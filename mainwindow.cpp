@@ -564,7 +564,111 @@ void MainWindow::on_actionHorror_triggered()
 void MainWindow::on_tableWidget_store_itemDoubleClicked(QTableWidgetItem *item)
 {
     try{
+        Game* game = (Game*)(item);
         mainUser->addGame((Game*)(item));
+        myQuery->prepare("SELECT id FROM Users where login = :login");
+        myQuery->bindValue(":login", mainUser->getLogin());
+        myQuery->exec();
+        int userid = myQuery->value(0).toInt();
+        if(game->getGenre()== "Adventure"){
+            myQuery->prepare("SELECT id FROM [Adventures] where name = :name");
+            myQuery->bindValue(":name", game->getName());
+            myQuery->exec();
+
+            int id = myQuery->value(0).toInt();
+            myQuery->prepare("SELECT adventure_id FROM [User_Games] where user_id = :userid");
+            myQuery->bindValue(":userid", userid);
+            myQuery->exec();
+            QString ids = myQuery->value(0).toString();
+            QString newId = ids + "-" + QString::number(id);
+
+            myQuery->prepare("UPDATE [User_Games] set adventure_id = :newids");
+            myQuery->bindValue(":newids", newId);
+
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Buy", " succesfully added!");
+                return;
+            }
+        }else if(game->getGenre()== "Horror"){
+            myQuery->prepare("SELECT id FROM [Horrors] where name = :name");
+            myQuery->bindValue(":name", game->getName());
+            myQuery->exec();
+
+            int id = myQuery->value(0).toInt();
+            myQuery->prepare("SELECT horror_id FROM [User_Games] where user_id = :userid");
+            myQuery->bindValue(":userid", userid);
+            myQuery->exec();
+            QString ids = myQuery->value(0).toString();
+            QString newId = ids + "-" + QString::number(id);
+
+            myQuery->prepare("UPDATE [User_Games] set horror_id = :newids");
+            myQuery->bindValue(":newids", newId);
+
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Buy", " succesfully added!");
+                return;
+            }
+        }else if(game->getGenre() == "MMORPG"){
+            myQuery->prepare("SELECT id FROM [MMORPGs] where name = :name");
+            myQuery->bindValue(":name", game->getName());
+            myQuery->exec();
+
+            int id = myQuery->value(0).toInt();
+            myQuery->prepare("SELECT mmorpg_id FROM [User_Games] where user_id = :userid");
+            myQuery->bindValue(":userid", userid);
+            myQuery->exec();
+            QString ids = myQuery->value(0).toString();
+            QString newId = ids + "-" + QString::number(id);
+
+            myQuery->prepare("UPDATE [User_Games] set mmorpg_id = :newids");
+            myQuery->bindValue(":newids", newId);
+
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Buy", " succesfully added!");
+                return;
+            }
+        }else if(game->getGenre() == "Sandbox"){
+            myQuery->prepare("SELECT id FROM [Sandboxes] where name = :name");
+            myQuery->bindValue(":name", game->getName());
+            myQuery->exec();
+
+            int id = myQuery->value(0).toInt();
+            myQuery->prepare("SELECT sandbox_id FROM [User_Games] where user_id = :userid");
+            myQuery->bindValue(":userid", userid);
+            myQuery->exec();
+            QString ids = myQuery->value(0).toString();
+            QString newId = ids + "-" + QString::number(id);
+
+            myQuery->prepare("UPDATE [User_Games] set sandbox_id = :newids");
+            myQuery->bindValue(":newids", newId);
+
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Buy", " succesfully added!");
+                return;
+            }
+
+
+        }else if(game->getGenre() == "Shooter"){
+            myQuery->prepare("SELECT id FROM [Shooters] where name = :name");
+            myQuery->bindValue(":name", game->getName());
+            myQuery->exec();
+
+            int id = myQuery->value(0).toInt();
+            myQuery->prepare("SELECT shooter_id FROM [User_Games] where user_id = :userid");
+            myQuery->bindValue(":userid", userid);
+            myQuery->exec();
+            QString ids = myQuery->value(0).toString();
+            QString newId = ids + "-" + QString::number(id);
+
+            myQuery->prepare("UPDATE [User_Games] set shooter_id = :newids");
+            myQuery->bindValue(":newids", newId);
+
+            if(myQuery->exec()){
+                QMessageBox::about(this,"Buy", " succesfully added!");
+                return;
+            }
+        }
+
     }
     catch(const char* exept){
         QMessageBox::about(this,"Buy", "Something gone wrong!");

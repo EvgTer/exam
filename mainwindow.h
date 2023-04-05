@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QDialog>
 #include <QTableWidgetItem>
+#include <QObject>
 
 //Accounts
 #include "user.h"
