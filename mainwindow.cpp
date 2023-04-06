@@ -69,7 +69,7 @@ void MainWindow::create_accounts()
 
             for(auto user : accounts){
                 if(user->getType() == "User"){
-                    gamesToUsersLibrary((User*)(user));
+                    //gamesToUsersLibrary((User*)(user));
                 }
             }
 
@@ -426,10 +426,12 @@ void MainWindow::on_pushButton_log_clicked()
             if(ui->lineEdit_Login->text() == accounts[i]->getLogin() && ui->lineEdit_password->text() == accounts[i]->getPassword() && accounts[i]->getType() == "Admin"){
 
                 QMessageBox::about(this,"Succes",ui->lineEdit_Login->text() +", you successfully logged in as admin!");
+                ui->label_balance->setText("admin doesnt have!");
                 return;
             }
             else if(ui->lineEdit_Login->text() == accounts[i]->getLogin() && ui->lineEdit_password->text() == accounts[i]->getPassword()&& accounts[i]->getType() == "User"){
                 QMessageBox::about(this,"Oh, no", ui->lineEdit_Login->text() +", you are try ing to log for another type of account(\ntry to change it!");
+
                 return;
             }
         }
