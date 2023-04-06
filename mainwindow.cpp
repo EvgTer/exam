@@ -69,7 +69,7 @@ void MainWindow::create_accounts()
 
             for(auto user : accounts){
                 if(user->getType() == "User"){
-                    //gamesToUsersLibrary((User*)(user));
+                    //gamesToUsersLibrary((User*)(user)); //throw
                 }
             }
 
@@ -417,6 +417,7 @@ void MainWindow::gamesToUsersLibrary(User* user)
                 }
             }
         }
+    user->sortLibrary();
 }
 
 void MainWindow::on_pushButton_log_clicked()
